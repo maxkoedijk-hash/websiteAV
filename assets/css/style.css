@@ -121,8 +121,8 @@ p { margin: 0; }
 .hero h1 { font-size: var(--step-4); }
 .hero h1 em { font-style: normal; color: var(--clay); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
-.hero-proof { display: flex; flex-wrap: wrap; gap: 10px 22px; padding: 0; margin: 4px 0 0; list-style: none; color: var(--muted); font-size: .95rem; }
-.hero-proof li { display: flex; align-items: center; gap: 8px; }
+.hero-proof { display: flex; flex-direction: column; gap: 10px; padding: 0; margin: 4px 0 0; list-style: none; color: var(--muted); font-size: .95rem; }
+.hero-proof li { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
 .hero-proof li::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--clay); }
 
 .collage { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; height: clamp(420px, 46vw, 600px); min-width: 0; }
