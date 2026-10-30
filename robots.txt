@@ -1,0 +1,5 @@
+# Zoekmachines en AI-assistenten (ChatGPT, Claude, Gemini, Perplexity) mogen de site lezen.
+User-agent: *
+Allow: /
+
+Sitemap: https://www.aiconicvoices.com/sitemap.xml
