@@ -32,8 +32,8 @@ document.querySelectorAll('.play').forEach((btn) => {
       current.status.textContent = '';
     }
     const audio = new Audio(src);
-    audio.play();
     status.textContent = 'Speelt af';
+    audio.play().catch(() => { status.textContent = 'Afspelen lukt niet'; });
     audio.addEventListener('ended', () => { status.textContent = ''; });
     current = { btn, audio, status };
   });

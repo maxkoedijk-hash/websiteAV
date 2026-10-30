@@ -7,4 +7,4 @@ Statische website (HTML/CSS/JS, geen build-stap). Open `index.html` in de browse
 - `assets/js/main.js`: mobiel menu, audiofragmenten, contactformulier
 - `assets/img/`: tijdelijke uitsnedes van de huidige site; vervangen door originele foto's in hoge resolutie
 
-Audiofragmenten: zet het pad naar een mp3 in `data-sample` op de afspeelknop van een stem.
+Audiofragmenten staan in `assets/audio/`. Zet het pad naar een mp3 in `data-sample` op de afspeelknop van een stem (Manuel is al gekoppeld).

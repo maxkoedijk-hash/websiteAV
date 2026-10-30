@@ -131,11 +131,6 @@ p { margin: 0; }
 .collage-col:nth-child(3) { transform: translateY(-20px); }
 .collage img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); filter: grayscale(1) contrast(1.02); }
 .collage figure { margin: 0; position: relative; }
-.collage figcaption {
-  position: absolute; left: 10px; bottom: 10px;
-  padding: 5px 12px; border-radius: 999px;
-  background: rgba(248, 243, 237, .9); font-size: .8rem; font-weight: 600;
-}
 @media (max-width: 880px) {
   .hero-grid { grid-template-columns: 1fr; }
   .collage { height: auto; }
@@ -189,6 +184,35 @@ p { margin: 0; }
 .voice-cta span { color: var(--on-dark-muted); font-size: .9rem; }
 .voices-foot { margin-top: 40px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; color: var(--on-dark-muted); }
 .voices-foot p { max-width: 36em; }
+
+/* Snijvlak */
+.blend-grid { display: grid; grid-template-columns: 1fr auto 1fr; align-items: stretch; }
+.blend-side {
+  background: var(--linen); border-radius: var(--radius);
+  padding: clamp(28px, 4vw, 48px);
+  display: grid; gap: 16px; align-content: start;
+}
+.blend-side:first-child { padding-right: clamp(80px, 9vw, 120px); }
+.blend-side:last-child { padding-left: clamp(80px, 9vw, 120px); text-align: right; }
+.blend-side h3 { font-size: var(--step-2); }
+.blend-side ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; color: var(--muted); font-size: var(--step-1); }
+.blend-core {
+  width: clamp(170px, 18vw, 220px); aspect-ratio: 1; border-radius: 50%;
+  margin-inline: clamp(-110px, -9vw, -80px);
+  align-self: center;
+  position: relative; z-index: 1;
+  background: var(--espresso); color: var(--on-dark);
+  display: grid; place-content: center; justify-items: center; gap: 10px; text-align: center;
+  box-shadow: 0 0 0 10px var(--sand);
+}
+.blend-core img { height: 36px; width: auto; filter: invert(1) brightness(1.6); }
+.blend-core strong { font-family: var(--font-display); font-weight: 600; font-size: 1.1rem; }
+@media (max-width: 760px) {
+  .blend-grid { grid-template-columns: 1fr; justify-items: stretch; }
+  .blend-side:first-child, .blend-side:last-child { padding: 28px 28px 64px; text-align: left; }
+  .blend-side:last-child { padding-top: 64px; padding-bottom: 28px; }
+  .blend-core { margin: -52px auto; width: 150px; }
+}
 
 /* Steps */
 .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; list-style: none; padding: 0; margin: 0; counter-reset: step; }
