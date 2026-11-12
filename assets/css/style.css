@@ -130,10 +130,16 @@ p { margin: 0; }
 .collage-col:nth-child(2) { transform: translateY(48px); }
 .collage-col:nth-child(3) { transform: translateY(-20px); }
 .collage img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); filter: grayscale(1) contrast(1.02); }
-.collage figure { margin: 0; position: relative; }
+.collage figure { margin: 0; position: relative; overflow: hidden; border-radius: var(--radius); }
 /* Wisselende gezichten: een tweede laag vervaagt zacht over de eerste */
-.collage .fade-layer { position: absolute; inset: 0; height: 100%; opacity: 0; transition: opacity 1.6s ease; }
-.collage .fade-layer.is-visible { opacity: 1; }
+.collage .fade-layer {
+  position: absolute; inset: 0; height: 100%;
+  opacity: 0; transform: scale(1.06);
+  animation: none;
+  transition: opacity 1.1s ease-out, transform 1.4s cubic-bezier(.2, .7, .2, 1);
+}
+.collage .fade-layer.is-visible { opacity: 1; transform: scale(1); }
+.collage .fade-layer.is-reset { transition: none; }
 @media (max-width: 880px) {
   .hero-grid { grid-template-columns: 1fr; }
   .collage { height: auto; }

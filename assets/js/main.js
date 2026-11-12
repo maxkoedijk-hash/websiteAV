@@ -68,24 +68,32 @@ if (collage && !reduceMotion) {
     fig.appendChild(layer);
     return { base, layer, src: base.getAttribute('src') };
   });
-  let last = -1;
+  // Alle plekken komen om de beurt aan bod, in een steeds andere volgorde.
+  let queue = [];
+  const nextSlot = () => {
+    if (!queue.length) queue = slots.map((_, i) => i).sort(() => Math.random() - 0.5);
+    return slots[queue.shift()];
+  };
   setInterval(() => {
     if (document.hidden) return;
-    let i;
-    do { i = Math.floor(Math.random() * slots.length); } while (i === last && slots.length > 1);
-    last = i;
-    const slot = slots[i];
+    const slot = nextSlot();
     const shown = new Set(slots.map((s) => s.src));
     const options = pool.filter((src) => !shown.has(src));
     const next = options[Math.floor(Math.random() * options.length)];
     slot.layer.onload = () => {
       slot.layer.classList.add('is-visible');
       setTimeout(() => {
-        slot.base.onload = () => slot.layer.classList.remove('is-visible');
+        slot.base.onload = () => {
+          // Laag onzichtbaar terugzetten zonder animatie; eronder staat nu hetzelfde gezicht.
+          slot.layer.classList.add('is-reset');
+          slot.layer.classList.remove('is-visible');
+          void slot.layer.offsetWidth;
+          slot.layer.classList.remove('is-reset');
+        };
         slot.base.src = next;
-      }, 1700);
+      }, 1500);
     };
     slot.src = next;
     slot.layer.src = next;
-  }, 3200);
+  }, 1800);
 }
