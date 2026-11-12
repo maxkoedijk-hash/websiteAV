@@ -61,12 +61,11 @@ if (collage && !reduceMotion) {
     'annefleur', 'dasilvian', 'dominik', 'barbara', 'ferdi', 'cas', 'zineb', 'jules']
     .map((n) => `assets/img/voices/${n}.jpg`);
   const slots = [...collage.querySelectorAll('figure')].map((fig) => {
-    const base = fig.querySelector('img');
-    const layer = document.createElement('img');
-    layer.className = 'fade-layer';
-    layer.alt = '';
-    fig.appendChild(layer);
-    return { base, layer, src: base.getAttribute('src') };
+    const first = fig.querySelector('img');
+    const second = document.createElement('img');
+    second.alt = '';
+    fig.appendChild(second);
+    return { layers: [first, second], front: 0, src: first.getAttribute('src') };
   });
   // Alle plekken komen om de beurt aan bod, in een steeds andere volgorde.
   let queue = [];
@@ -80,20 +79,22 @@ if (collage && !reduceMotion) {
     const shown = new Set(slots.map((s) => s.src));
     const options = pool.filter((src) => !shown.has(src));
     const next = options[Math.floor(Math.random() * options.length)];
-    slot.layer.onload = () => {
-      slot.layer.classList.add('is-visible');
+    const oldLayer = slot.layers[slot.front];
+    const newLayer = slot.layers[1 - slot.front];
+    slot.front = 1 - slot.front;
+    slot.src = next;
+    newLayer.onload = () => {
+      // Nieuw gezicht komt bovenop en landt zacht; daarna blijft het gewoon staan.
+      oldLayer.classList.remove('is-top');
+      newLayer.classList.add('is-top', 'is-visible');
       setTimeout(() => {
-        slot.base.onload = () => {
-          // Laag onzichtbaar terugzetten zonder animatie; eronder staat nu hetzelfde gezicht.
-          slot.layer.classList.add('is-reset');
-          slot.layer.classList.remove('is-visible');
-          void slot.layer.offsetWidth;
-          slot.layer.classList.remove('is-reset');
-        };
-        slot.base.src = next;
+        // Oude laag (nu volledig bedekt) zonder animatie klaarzetten voor de volgende keer.
+        oldLayer.classList.add('is-reset');
+        oldLayer.classList.remove('is-visible');
+        void oldLayer.offsetWidth;
+        oldLayer.classList.remove('is-reset');
       }, 1500);
     };
-    slot.src = next;
-    slot.layer.src = next;
+    newLayer.src = next;
   }, 1800);
 }
