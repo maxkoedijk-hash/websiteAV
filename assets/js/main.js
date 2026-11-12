@@ -52,3 +52,40 @@ form.addEventListener('submit', (e) => {
   }
   note.textContent = 'Concept: het formulier wordt bij livegang gekoppeld. Mail ons gerust via contact@aiconicvoices.com.';
 });
+
+// Gezichten bovenaan: om de paar seconden zacht een ander gezicht uit de pool tonen.
+const collage = document.querySelector('.collage');
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (collage && !reduceMotion) {
+  const pool = ['manuel', 'martine', 'alkan', 'machteld', 'joshua', 'shari', 'tom', 'zoe', 'hans',
+    'annefleur', 'dasilvian', 'dominik', 'barbara', 'ferdi', 'cas', 'zineb', 'jules']
+    .map((n) => `assets/img/voices/${n}.jpg`);
+  const slots = [...collage.querySelectorAll('figure')].map((fig) => {
+    const base = fig.querySelector('img');
+    const layer = document.createElement('img');
+    layer.className = 'fade-layer';
+    layer.alt = '';
+    fig.appendChild(layer);
+    return { base, layer, src: base.getAttribute('src') };
+  });
+  let last = -1;
+  setInterval(() => {
+    if (document.hidden) return;
+    let i;
+    do { i = Math.floor(Math.random() * slots.length); } while (i === last && slots.length > 1);
+    last = i;
+    const slot = slots[i];
+    const shown = new Set(slots.map((s) => s.src));
+    const options = pool.filter((src) => !shown.has(src));
+    const next = options[Math.floor(Math.random() * options.length)];
+    slot.layer.onload = () => {
+      slot.layer.classList.add('is-visible');
+      setTimeout(() => {
+        slot.base.onload = () => slot.layer.classList.remove('is-visible');
+        slot.base.src = next;
+      }, 1700);
+    };
+    slot.src = next;
+    slot.layer.src = next;
+  }, 3200);
+}

@@ -11,7 +11,7 @@
   --on-dark: #f3ebe3;
   --on-dark-muted: #c2b2a6;
 
-  --font-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Inter Tight", "Avenir Next", "Segoe UI", system-ui, sans-serif;
   --font-body: "Figtree", "Avenir Next", "Segoe UI", system-ui, sans-serif;
 
   --step--1: .875rem;
@@ -45,7 +45,7 @@ h1, h2, h3 {
   font-family: var(--font-display);
   font-weight: 600;
   line-height: 1.08;
-  letter-spacing: -.02em;
+  letter-spacing: -.01em;
   margin: 0;
   text-wrap: balance;
 }
@@ -131,6 +131,9 @@ p { margin: 0; }
 .collage-col:nth-child(3) { transform: translateY(-20px); }
 .collage img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); filter: grayscale(1) contrast(1.02); }
 .collage figure { margin: 0; position: relative; }
+/* Wisselende gezichten: een tweede laag vervaagt zacht over de eerste */
+.collage .fade-layer { position: absolute; inset: 0; height: 100%; opacity: 0; transition: opacity 1.6s ease; }
+.collage .fade-layer.is-visible { opacity: 1; }
 @media (max-width: 880px) {
   .hero-grid { grid-template-columns: 1fr; }
   .collage { height: auto; }
