@@ -16,7 +16,7 @@ links.addEventListener('click', (e) => {
 let current = null;
 document.querySelectorAll('.play').forEach((btn) => {
   btn.addEventListener('click', () => {
-    const status = btn.closest('.voice').querySelector('.voice-status');
+    const status = btn.closest('.voice, .case-voice').querySelector('.voice-status');
     const src = btn.dataset.sample;
     if (!src) {
       status.textContent = 'Fragment volgt';
@@ -42,7 +42,7 @@ document.querySelectorAll('.play').forEach((btn) => {
 // Contactformulier: in dit concept nog niet gekoppeld aan een verzenddienst.
 const form = document.getElementById('contact-form');
 const note = document.getElementById('form-note');
-form.addEventListener('submit', (e) => {
+form?.addEventListener('submit', (e) => {
   e.preventDefault();
   const email = form.elements.email;
   if (!email.value || !email.checkValidity()) {
@@ -98,3 +98,15 @@ if (collage && !reduceMotion) {
     newLayer.src = next;
   }, 1800);
 }
+
+// Video's: pas na een klik laden (sneller en zonder YouTube-cookies vooraf).
+document.querySelectorAll('.video-embed button[data-yt]').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const frame = document.createElement('iframe');
+    frame.src = `https://www.youtube-nocookie.com/embed/${btn.dataset.yt}?autoplay=1&rel=0`;
+    frame.title = btn.getAttribute('aria-label').replace('Speel de video van ', 'Video van ').replace(' af', '');
+    frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+    frame.allowFullscreen = true;
+    btn.replaceWith(frame);
+  });
+});
